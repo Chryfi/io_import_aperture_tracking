@@ -1,2 +1,1 @@
-# import_cameraJSON
-Blender import script for aperture's camera movement as json file
+# JSON aperture camera movement Blender importer add-on
