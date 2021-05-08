@@ -39,18 +39,20 @@ class ImportJSON(bpy.types.Operator, ImportHelper):
         for frame in range(len(data)):
             frameData = data[frame]
             
-            try
+            try:
                 if frame == 0 and "information" in data[frame]:
-                    renderInfo = data[frame]
+                    renderInfo = data[frame]["information"]
                     bpy.context.scene.render.fps = renderInfo["fps"]
                     bpy.context.scene.render.resolution_x = renderInfo["resolution"][0]
                     bpy.context.scene.render.resolution_y = renderInfo["resolution"][1]
                 else:
                     obj_camera.location = (frameData["position"][0], -frameData["position"][2], frameData["position"][1])
-                    obj_camera.delta_rotation_euler  = Euler((math.radians(90-frameData["angle"][3]), math.radians(frameData["angle"][1]), math.radians(-frameData["angle"][2]-180)), 'XYZ')
-            
+                    obj_camera.delta_rotation_euler  = Euler((math.radians(90-frameData["angle"][3]), 0, math.radians(-frameData["angle"][2]-180)), 'XYZ')
+                    obj_camera.rotation_euler = Euler((0, 0, -math.radians(frameData["angle"][1])), 'XYZ')
+
                     obj_camera.keyframe_insert(data_path="location", frame=frame+frameOffset)
                     obj_camera.keyframe_insert(data_path="delta_rotation_euler", frame=frame+frameOffset)
+                    obj_camera.keyframe_insert(data_path="rotation_euler", frame=frame+frameOffset)
             except TypeError:
                 self.report({"WARNING"}, "An error occured while reading the file. Check if the file has the correct structure!")
                 file.close()
