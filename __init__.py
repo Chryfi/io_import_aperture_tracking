@@ -97,7 +97,7 @@ class ImportJSON(bpy.types.Operator, ImportHelper):
 
                 for entityKey in keyset:
                     entity = entities[entityKey]
-                    bpy.ops.mesh.primitive_cube_add()
+                    bpy.ops.object.armature_add()
                     obj = bpy.context.active_object
                 
                     obj.name = entityKey
@@ -106,7 +106,7 @@ class ImportJSON(bpy.types.Operator, ImportHelper):
                         frameData = entity[frame]
 
                         if "body_rotation" in frameData:
-                            obj.delta_rotation_euler  = Euler((math.radians(90-frameData["body_rotation"][2]), 0, math.radians(-frameData["body_rotation"][1]-180)), 'XYZ')
+                            obj.delta_rotation_euler  = Euler((math.radians(90-frameData["body_rotation"][2]), 0, math.radians(-frameData["body_rotation"][1])), 'XYZ')
                             obj.keyframe_insert(data_path="delta_rotation_euler", frame=frame+frameOffset)
 
                         obj.location = (frameData["position"][0], -frameData["position"][2], frameData["position"][1])
