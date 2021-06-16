@@ -188,8 +188,8 @@ class ImportJSON(bpy.types.Operator, ImportHelper):
 
             #possible interpolated functions for FOV dataset https://docs.google.com/spreadsheets/d/1WJVoWsvNT1AA2BxMRuZtXw0CxF1kkeuByHMhyBgvIy8/edit?usp=sharing
             # 0.302458 + 1.99536 x - 0.00622598 x^2
-            x_points = [ 2.5,     5,     10,    20,   25,    30, 35,    40,     50,    60,   70,      80,   90,  100,  110,    120,  130,  140]
-            y_points = [ 411,   211, 105.25, 52.15, 41.4, 34.25, 29, 25.20, 19.525, 15.63, 12.75, 10.525, 8.68, 7.125, 5.71, 4.535, 3.41, 2.35]
+            x_points = [ 2.5,  2.81,  3.125,   3.75,   5,   6.25,    7.5,     10,  12.5,  15,    20,   25,    30,  35,    40,     50,    60,    70,     80,   90,  100,  110,    120,  130,  140]
+            y_points = [ 422, 375.5, 337.75, 281.25, 211, 168.75, 140.63, 105.25,  84.1,  70, 52.15, 41.4, 34.25,  29, 25.13, 19.525, 15.63, 12.75, 10.525, 8.68, 7.125, 5.71, 4.535, 3.41, 2.35]
 
             for frame in range(len(data["camera-tracking"])):
                 frameData = data["camera-tracking"][frame]
