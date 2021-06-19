@@ -1,4 +1,4 @@
-# Aperture JSON Blender importer
+# Aperture Tracking Blender Importer
 
 This Blender add-on can import the tracking data created by the Minecraft mod Aperture.
 It can import camera and entity movement.
