@@ -87,7 +87,7 @@ class ImportJSON(bpy.types.Operator, ImportHelper):
                 obj_camera.rotation_euler = Euler((0, 0, -math.radians(frameData["angle"][1])), 'XYZ')
 
                 #NyanLi https://github.com/NyaNLI helped a lot to figure out how to convert Minecraft FOV to Blender's FOV
-                fovFactor = 1.1 if dynamicFOV else 1 #fov*1.1 because of specator mode and dynamic fov#
+                fovFactor = 1.1 if dynamicFOV else 1 #fov*1.1 because of specator mode and dynamic fov - ignores whether other fov effects take place
 
                 obj_camera.data.lens =  0.5/(math.tan(fovFactor*math.radians(frameData["angle"][0])/2)) * obj_camera.data.sensor_height
 
