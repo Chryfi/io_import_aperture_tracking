@@ -8,7 +8,7 @@ bl_info = {
     "warning": "",
     "category": "Import"
 }
-version_no = 110
+version_no = 120
 
 import bpy
 import json
@@ -70,7 +70,7 @@ class ImportJSON(bpy.types.Operator, ImportHelper):
                     dynamicFOV = renderInfo["dynamic_fov"]
 
                     if version_no<renderInfo["required_import_version"]:
-                        self.report({"WARNING"}, "The version of the import script is not compatible with the data! Download a new import script version at https://github.com/Chryfi/io_import_aperture_tracking/releases")
+                        self.report({"WARNING"}, "The version of the import script is not compatible with the data! Update the script at https://github.com/Chryfi/io_import_aperture_tracking/releases")
                         file.close()
                         return {"CANCELLED"}
                 except:
@@ -172,7 +172,7 @@ class ImportJSON(bpy.types.Operator, ImportHelper):
                         frameData = morph[frame]
 
                         if frame == 0:
-                            startFrame = frameData["frame"]
+                            startFrame = int(int(frameData["frame"]) // ignoreFrame)
 
                         #obj.delta_rotation_euler = Euler((math.radians(90), 0, 0), 'ZXY')
                         #obj.rotation_euler = Euler((math.radians(frameData["rotation"][1]), math.radians(frameData["rotation"][0] - 90), math.radians(90 - frameData["rotation"][2])), 'ZXY')
