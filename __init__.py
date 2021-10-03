@@ -24,7 +24,7 @@ from bpy.props import (BoolProperty, IntProperty, StringProperty)
 from bpy_extras.io_utils import (ImportHelper, path_reference_mode)
 
 class ImportJSON(bpy.types.Operator, ImportHelper):
-    # Panel's information
+    """Load an Aperture tracking data file"""
     bl_idname = "import_scene.trackjson"
     bl_label = 'Import Aperture JSON'
     bl_options = {'PRESET'}
