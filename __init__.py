@@ -25,7 +25,7 @@ from bpy_extras.io_utils import (ImportHelper, path_reference_mode)
 
 class ImportJSON(bpy.types.Operator, ImportHelper):
     # Panel's information
-    bl_idname = "test.open_filbrowser"
+    bl_idname = "import_scene.trackjson"
     bl_label = 'Import Aperture JSON'
     bl_options = {'PRESET'}
 
@@ -217,7 +217,7 @@ def ignoreFrameMath(ignoreFrame : int, frame : int):
 
 # Register and stuff
 def menu_func_import(self, context):
-    self.layout.operator(ImportJSON.bl_idname, text="JSON cameradata (.json)")
+    self.layout.operator(ImportJSON.bl_idname, text="JSON trackingdata (.json)")
 
 classes = (
     ImportJSON, 
