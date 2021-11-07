@@ -36,6 +36,9 @@ class ImportJSON(bpy.types.Operator, ImportHelper):
     cameraImport: BoolProperty(name="Import Camera", default=True)
     entityImport: BoolProperty(name="Import Entities", default=True)
     morphImport: BoolProperty(name="Import Morph-trackers", default=True)
+    deltaLocationX: IntProperty(name="Delta Location X", default=0)
+    deltaLocationY: IntProperty(name="Delta Location Y", default=0)
+    deltaLocationZ: IntProperty(name="Delta Location Z", default=0)
 
     def execute(self, context):
         file = open(self.properties.filepath,)
@@ -44,7 +47,7 @@ class ImportJSON(bpy.types.Operator, ImportHelper):
         frameOffset = self.properties.frameOffsetPanel
         ignoreFrame = -1
         dynamicFOV = True
-        positionOffsetX = 0 #seems as if the x coordinate needs to be 0.05 off
+        positionOffsetX = 0 #seems as if the x coordinate needs to be 0.05 off???
         positionOffsetY = 0
         positionOffsetZ = 0
         cameraIndex = "camera_tracking"
@@ -100,6 +103,7 @@ class ImportJSON(bpy.types.Operator, ImportHelper):
                     frameData = data[cameraIndex][frame]
                     keyframePos = blenderFrame+frameOffset
             
+                    obj_camera.delta_location = (self.properties.deltaLocationX, self.properties.deltaLocationY, self.properties.deltaLocationZ)
                     obj_camera.location = (frameData["position"][0], -frameData["position"][2], frameData["position"][1])
                     obj_camera.delta_rotation_euler  = Euler((math.radians(90-frameData["angle"][3]), 0, math.radians(-frameData["angle"][2]-180)), 'XYZ')
                     obj_camera.rotation_euler = Euler((0, 0, -math.radians(frameData["angle"][1])), 'XYZ')
@@ -141,7 +145,8 @@ class ImportJSON(bpy.types.Operator, ImportHelper):
                         if "body_rotation" in frameData:
                             obj.delta_rotation_euler  = Euler((math.radians(90-frameData["body_rotation"][2]), 0, math.radians(-frameData["body_rotation"][1])), 'XYZ')
                             obj.keyframe_insert(data_path="delta_rotation_euler", frame=keyframePos)
-
+                        
+                        obj.delta_location = (self.properties.deltaLocationX, self.properties.deltaLocationY, self.properties.deltaLocationZ)
                         obj.location = (frameData["position"][0], -frameData["position"][2], frameData["position"][1])
                         insertLocation(obj, keyframePos)
             
@@ -199,6 +204,7 @@ class ImportJSON(bpy.types.Operator, ImportHelper):
                         Vector((0, 0, 0, 1))))
 
                         obj.matrix_world = translation_matrix @ rotation_matrix @ scale_matrix
+                        obj.delta_location = (self.properties.deltaLocationX, self.properties.deltaLocationY, self.properties.deltaLocationZ)
 
                         insertLocRotScale(obj, keyframePos)
         
@@ -223,6 +229,9 @@ class ImportJSON(bpy.types.Operator, ImportHelper):
         layout.prop(operator, 'cameraImport')
         layout.prop(operator, 'entityImport')
         layout.prop(operator, 'morphImport')
+        layout.prop(operator, 'deltaLocationX')
+        layout.prop(operator, 'deltaLocationY')
+        layout.prop(operator, 'deltaLocationZ')
 
 def ignoreFrameMath(ignoreFrame : int, frame : int):
     if int(frame)%int(ignoreFrame) != 0:
