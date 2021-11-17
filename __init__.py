@@ -69,9 +69,9 @@ class ImportJSON(bpy.types.Operator, ImportHelper):
                     ignoreFrame = round(renderInfo["motionblur_fps"]) / bpy.context.scene.render.fps
 
                     if renderInfo["motionblur_fps"] != renderInfo["fps"]: #motionblur equivalent settings to ffmpeg's motionblur
-                        bpy.context.scene.eevee.motion_blur_position = 'START'
+                        bpy.context.scene.eevee.motion_blur_position = 'END'
                         bpy.context.scene.eevee.motion_blur_shutter = 1
-                        bpy.context.scene.cycles.motion_blur_position = 'START'
+                        bpy.context.scene.cycles.motion_blur_position = 'END'
                         bpy.context.scene.render.motion_blur_shutter = 1
 
                     dynamicFOV = renderInfo["dynamic_fov"]
