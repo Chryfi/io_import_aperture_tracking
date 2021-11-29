@@ -121,7 +121,8 @@ class ImportJSON(bpy.types.Operator, ImportHelper):
                     obj_camera.keyframe_insert(data_path="delta_rotation_euler", frame=keyframePos)
                     obj_camera.data.keyframe_insert(data_path="lens", frame=keyframePos)
 
-                bpy.context.view_layer.objects.active.select_set(False)
+                if bpy.context.view_layer.objects.active is not None:
+                    bpy.context.view_layer.objects.active.select_set(False)
                 bpy.context.view_layer.objects.active = obj_camera
                 obj_camera.select_set(True)
                 self.eulerFilter()
