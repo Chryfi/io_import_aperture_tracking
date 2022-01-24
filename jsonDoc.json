@@ -1,0 +1,83 @@
+{
+	"information": {
+		"fps": "double",
+		"motionblur_fps": "double",
+		"dynamic_fov": "boolean",
+		"resolution": ["int", "int"],
+		"held_frames": "int",
+		"required_import_version": "int"
+	},
+	"camera_tracking": [{
+			"position": ["double x", "double y", "double z"],
+			"angle": ["float fov", "float roll", "float", "pitch"]
+		},
+		{
+			"position": ["double x", "double y", "double z"],
+			"angle": ["float fov", "float roll", "float", "pitch"]
+		}
+	],
+	"entity_tracking": {
+		"name1": [{
+                "frame": "int",
+				"position": ["double x", "double y", "double z"],
+				"body_rotation": [0, "double body_yaw", 0] //optional
+			},
+			{
+				"position": ["double x", "double y", "double z"],
+				"body_rotation": [0, "double body_yaw", 0] //optional
+			}
+		],
+		"name2": [{
+                "frame": "int",
+				"position": ["double x", "double y", "double z"],
+				"body_rotation": [0, "double body_yaw", 0] //optional
+			},
+			{
+				"position": ["double x", "double y", "double z"],
+				"body_rotation": [0, "double body_yaw", 0] //optional
+			}
+		]
+	},
+	"morph_tracking": {
+		"name": [{
+				"frame": "int",
+				"position": ["double x", "double y", "double z"],
+				"rotation": [
+					["double m00", "double m01", "double m02"],
+					["double m10", "double m11", "double m12"],
+					["double m20", "double m21", "double m22"]
+				],
+				"scale": ["double x", "double y", "double z"]
+			},
+			{
+				"position": ["double x", "double y", "double z"],
+				"rotation": [
+					["double m00", "double m01", "double m02"],
+					["double m10", "double m11", "double m12"],
+					["double m20", "double m21", "double m22"]
+				],
+				"scale": ["double x", "double y", "double z"]
+			}
+		],
+		"name2": [{
+				"frame": "int",
+				"position": ["double x", "double y", "double z"],
+				"rotation": [
+					["double m00", "double m01", "double m02"],
+					["double m10", "double m11", "double m12"],
+					["double m20", "double m21", "double m22"]
+				],
+				"scale": ["double x", "double y", "double z"]
+			},
+			{
+				"position": ["double x", "double y", "double z"],
+				"rotation": [
+					["double m00", "double m01", "double m02"],
+					["double m10", "double m11", "double m12"],
+					["double m20", "double m21", "double m22"]
+				],
+				"scale": ["double x", "double y", "double z"]
+			}
+		]
+	}
+}
