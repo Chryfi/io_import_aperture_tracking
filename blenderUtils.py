@@ -9,9 +9,10 @@ def addArmature(name):
     return obj
 
 def addCamera(name):
-    bpy.ops.object.armature_add()
+    bpy.ops.object.camera_add()
 
     obj = bpy.context.active_object
+    bpy.context.scene.camera = obj
     obj.name = name
 
     return obj

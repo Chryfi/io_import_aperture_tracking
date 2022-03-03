@@ -17,6 +17,7 @@ class Parser():
         self.camera = camera
         self.frameOffset = jsonImporter.properties.frameOffsetPanel
         self.locationOffset = (jsonImporter.properties.deltaLocationX, jsonImporter.properties.deltaLocationY, jsonImporter.properties.deltaLocationZ)
+        self.morphRotationOffset = (jsonImporter.properties.morphRotationX, jsonImporter.properties.morphRotationY, jsonImporter.properties.morphRotationZ)
         self.useEulerFilter = jsonImporter.properties.eulerFilterButton
         self.ignoreKeyframeTrackers = jsonImporter.properties.ignoreKeyframeTrackers
         self.yAxis = '-Y'
@@ -183,16 +184,15 @@ class Parser():
                 Vector((0, 0, frameData["scale"][2], 0)),
                 Vector((0, 0, 0, 1))))
 
-                obj.matrix_world = translation_matrix @ rotation_matrix @ scale_matrix
-                obj.delta_location = self.locationOffset
+                rotation_offset = Euler((math.radians(self.morphRotationOffset[0]), math.radians(self.morphRotationOffset[1]), math.radians(self.morphRotationOffset[2])), 'XYZ').to_matrix().to_4x4()
+                obj.matrix_world = translation_matrix @ rotation_matrix @ scale_matrix @ rotation_offset
 
                 insertLocRotScale(obj, keyframePos)
+                
+            obj.delta_location = self.locationOffset
 
             if len(morphData) > 1:
-                try:
-                    self.eulerFilter()
-                except:
-                    print(len(morphData))
+                self.eulerFilter()
 
 
     def eulerFilter(self):
