@@ -1,5 +1,7 @@
 # Aperture Tracking Blender Importer
 
+# This script has been improved and is now located in the emoticons_utils add-on
+
 This Blender add-on can import the tracking data created by the Minecraft mod Aperture. It imports for example camera tracking, morph tracking and entity tracking.
 
 # How to install
