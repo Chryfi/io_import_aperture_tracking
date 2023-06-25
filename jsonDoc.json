@@ -13,11 +13,11 @@
 		 */
 		{
 			"position": ["double x", "double y", "double z"],
-			"angle": ["float fov", "float roll", "float", "pitch"]
+			"angle": ["float fov", "float roll", "float yaw", "pitch"]
 		},
 		{
 			"position": ["double x", "double y", "double z"],
-			"angle": ["float fov", "float roll", "float", "pitch"]
+			"angle": ["float fov", "float roll", "float yaw", "pitch"]
 		}
 	],
 	"entity_tracking": {
