@@ -22,7 +22,7 @@
 	],
 	"entity_tracking": {
 		/*
-		 * Every json object here represents one tracker. The key is the name of the tracker.
+		 * Every element here represents one tracker. The key is the name of the tracker.
 		 */
 		"name1": [
 			/*
@@ -42,7 +42,7 @@
 	},
 	"morph_tracking": {
 		/*
-		 * Every json object here represents one tracker. The key is the name of the tracker.
+		 * Every element here represents one tracker. The key is the name of the tracker.
 		 */
 		"name": [
 			/*
