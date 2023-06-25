@@ -4,10 +4,14 @@
 		"motionblur_fps": "double",
 		"dynamic_fov": "boolean",
 		"resolution": ["int", "int"],
-		"held_frames": "int",
+		"held_frames": "int", //this isn't important anymore, as aperture removes the held frames now.
 		"required_import_version": "int"
 	},
-	"camera_tracking": [{
+	"camera_tracking": [
+		/*
+		 * every json object here represents one frame.
+		 */
+		{
 			"position": ["double x", "double y", "double z"],
 			"angle": ["float fov", "float roll", "float", "pitch"]
 		},
@@ -17,18 +21,16 @@
 		}
 	],
 	"entity_tracking": {
-		"name1": [{
-                "frame": "int",
-				"position": ["double x", "double y", "double z"],
-				"body_rotation": [0, "double body_yaw", 0] //optional
-			},
+		/*
+		 * Every json object here represents one tracker. The key is the name of the tracker.
+		 */
+		"name1": [
+			/*
+			 * every json object in this array represents one frame.
+			 * The first json object needs to contain the start frame when the entity was tracked.
+			 */
 			{
-				"position": ["double x", "double y", "double z"],
-				"body_rotation": [0, "double body_yaw", 0] //optional
-			}
-		],
-		"name2": [{
-                "frame": "int",
+                		"frame": "int",
 				"position": ["double x", "double y", "double z"],
 				"body_rotation": [0, "double body_yaw", 0] //optional
 			},
@@ -39,27 +41,15 @@
 		]
 	},
 	"morph_tracking": {
-		"name": [{
-				"frame": "int",
-				"position": ["double x", "double y", "double z"],
-				"rotation": [
-					["double m00", "double m01", "double m02"],
-					["double m10", "double m11", "double m12"],
-					["double m20", "double m21", "double m22"]
-				],
-				"scale": ["double x", "double y", "double z"]
-			},
+		/*
+		 * Every json object here represents one tracker. The key is the name of the tracker.
+		 */
+		"name": [
+			/*
+			 * every json object in this array represents one frame.
+			 * The first json object needs to contain the start frame when the entity was tracked.
+			 */
 			{
-				"position": ["double x", "double y", "double z"],
-				"rotation": [
-					["double m00", "double m01", "double m02"],
-					["double m10", "double m11", "double m12"],
-					["double m20", "double m21", "double m22"]
-				],
-				"scale": ["double x", "double y", "double z"]
-			}
-		],
-		"name2": [{
 				"frame": "int",
 				"position": ["double x", "double y", "double z"],
 				"rotation": [
