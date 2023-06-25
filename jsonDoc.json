@@ -1,7 +1,7 @@
 {
 	"information": {
 		"fps": "double",
-		"motionblur_fps": "double",
+		"motionblur_fps": "double", //this isn't important anymore, as aperture removes the motionblur frames now.
 		"dynamic_fov": "boolean",
 		"resolution": ["int", "int"],
 		"held_frames": "int", //this isn't important anymore, as aperture removes the held frames now.
