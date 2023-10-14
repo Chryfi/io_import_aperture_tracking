@@ -22,7 +22,7 @@ from .trackingDataParser import Parser
 
 from mathutils import Euler, Matrix, Vector
 from bpy.props import (BoolProperty, IntProperty, StringProperty, EnumProperty, CollectionProperty)
-from bpy_extras.io_utils import (ImportHelper, path_reference_mode)
+from bpy_extras.io_utils import (ImportHelper)
 
 class ImportJSON(bpy.types.Operator, ImportHelper):
     """Load an Aperture tracking data file"""
@@ -41,10 +41,12 @@ class ImportJSON(bpy.types.Operator, ImportHelper):
 
     # Panel's properties
     filename_ext = ".json"
-    filter_glob = StringProperty(default="*.json", options={'HIDDEN'})
-    use_selection = BoolProperty(name="Selection only", description="Import selected json only", default=False)
-    path_mode = path_reference_mode
-    check_extension = True
+
+    filter_glob: StringProperty(
+            default="*.json",
+            options={'HIDDEN'},
+            )
+
     frameOffsetPanel: IntProperty(name="Frame offset", default=1)
     cameraImport: BoolProperty(name="Import Camera", default=True)
     entityImport: BoolProperty(name="Import Entities", default=True)
