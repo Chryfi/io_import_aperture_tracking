@@ -7,3 +7,5 @@ Download this as zip, then in Blender's add-ons panel (File > User Preferences >
 
 # How to use
 After exporting the tracking data from the Aperture Mod you go into Blender Menu - File > Import > Import Aperture JSON then you select the json file.
+
+The addon now supports multiple file import. The files will be imported by sorting them alphabetically.
