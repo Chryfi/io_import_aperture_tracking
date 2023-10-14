@@ -13,6 +13,7 @@ version_no = 161
 import bpy
 import json
 import traceback
+import os
 
 from math import sqrt
 from .blenderUtils import *
@@ -20,7 +21,7 @@ from .errors import *
 from .trackingDataParser import Parser
 
 from mathutils import Euler, Matrix, Vector
-from bpy.props import (BoolProperty, IntProperty, StringProperty, EnumProperty)
+from bpy.props import (BoolProperty, IntProperty, StringProperty, EnumProperty, CollectionProperty)
 from bpy_extras.io_utils import (ImportHelper, path_reference_mode)
 
 class ImportJSON(bpy.types.Operator, ImportHelper):
@@ -28,6 +29,15 @@ class ImportJSON(bpy.types.Operator, ImportHelper):
     bl_idname = "import_scene.trackjson"
     bl_label = 'Import Aperture JSON'
     bl_options = {'PRESET'}
+
+    # for multi file import
+    files: CollectionProperty(
+            type=bpy.types.OperatorFileListElement,
+            options={'HIDDEN', 'SKIP_SAVE'},
+        )
+    directory: StringProperty(
+        subtype='DIR_PATH',
+    )
 
     # Panel's properties
     filename_ext = ".json"
@@ -53,58 +63,67 @@ class ImportJSON(bpy.types.Operator, ImportHelper):
     defaultErrorEnd = "Read the console for further information."
 
     def execute(self, context):
-        file = open(self.properties.filepath,)
-        data = json.load(file)
-        camera = bpy.context.scene.camera
+        frameOffset = 0
+        files = self.files.values()
 
-        file.close()
-        
-        if camera is None:
-            camera = addCamera("Camera")
+        #sort alphabetically because it does not seem like selection order gets recognised
+        files.sort(key=lambda file : file.name)
 
-        parser = Parser(data, camera, self)
-        
-        #parsing meta information
-        try:
-            parser.parseMetaInformation(version_no)
-        except VersionError as e:
-            self.report({"WARNING"}, str(e) + "\nDownload the newest version of the script at https://github.com/Chryfi/io_import_aperture_tracking/releases.")
+        for trackingFile in files:
+            file = open(os.path.join(self.directory, trackingFile.name),)
+            data = json.load(file)
+            camera = bpy.context.scene.camera
 
-            return {"CANCELLED"}
-        except:
-            self.defaultDataError("information data", "", self.defaultErrorEnd)
+            file.close()
+            
+            if camera is None:
+                camera = addCamera("Camera")
 
-            if not self.properties.ignoreErrors:
+            parser = Parser(data, camera, self)
+            
+            #parsing meta information
+            try:
+                parser.parseMetaInformation(version_no)
+                parser.frameOffset += frameOffset
+            except VersionError as e:
+                self.report({"WARNING"}, str(e) + "\nDownload the newest version of the script at https://github.com/Chryfi/io_import_aperture_tracking/releases.")
+
                 return {"CANCELLED"}
-        
-        #parsing camera
-        if self.properties.cameraImport is True:
-            try:
-                parser.parseCamera()
             except:
-                self.defaultReportError("camera data", "", self.defaultErrorEnd)
+                self.defaultDataError("information data", "", self.defaultErrorEnd)
 
                 if not self.properties.ignoreErrors:
                     return {"CANCELLED"}
+            
+            #parsing camera
+            if self.properties.cameraImport is True:
+                try:
+                    parser.parseCamera()
+                    frameOffset += parser.cameraFrames
+                except:
+                    self.defaultReportError("camera data", "", self.defaultErrorEnd)
 
-        #parsing entities
-        if self.properties.entityImport is True:
-            try:
-                parser.parseEntities()
-            except:
-                self.defaultReportError("entities data", "", self.defaultErrorEnd)
+                    if not self.properties.ignoreErrors:
+                        return {"CANCELLED"}
 
-                if not self.properties.ignoreErrors:
-                    return {"CANCELLED"}
-        
-        if self.properties.morphImport is True:
-            try:
-                parser.parseMorphs()
-            except:
-                self.defaultReportError("morphs data", "", self.defaultErrorEnd)
+            #parsing entities
+            if self.properties.entityImport is True:
+                try:
+                    parser.parseEntities()
+                except:
+                    self.defaultReportError("entities data", "", self.defaultErrorEnd)
 
-                if not self.properties.ignoreErrors:
-                    return {"CANCELLED"}
+                    if not self.properties.ignoreErrors:
+                        return {"CANCELLED"}
+            
+            if self.properties.morphImport is True:
+                try:
+                    parser.parseMorphs()
+                except:
+                    self.defaultReportError("morphs data", "", self.defaultErrorEnd)
+
+                    if not self.properties.ignoreErrors:
+                        return {"CANCELLED"}
 
         return{'FINISHED'}
 

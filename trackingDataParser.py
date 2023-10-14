@@ -15,6 +15,7 @@ class Parser():
     def __init__(self, data, camera, jsonImporter):
         self.data = data
         self.camera = camera
+        self.cameraFrames = 0
         self.frameOffset = jsonImporter.properties.frameOffsetPanel
         self.locationOffset = (jsonImporter.properties.deltaLocationX, jsonImporter.properties.deltaLocationY, jsonImporter.properties.deltaLocationZ)
         self.morphRotationOffset = (jsonImporter.properties.morphRotationX, jsonImporter.properties.morphRotationY, jsonImporter.properties.morphRotationZ)
@@ -78,6 +79,7 @@ class Parser():
             insertRotationEuler(self.camera, keyframePos)
             insertKeyframe(self.camera, "delta_rotation_euler", keyframePos)
             insertKeyframe(self.camera.data, "lens", keyframePos)
+            self.cameraFrames += 1
 
         #make the camera the only selected active object
         if bpy.context.view_layer.objects.active is not None:
