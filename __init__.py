@@ -59,7 +59,7 @@ class ImportJSON(bpy.types.Operator, ImportHelper):
     morphRotationY: IntProperty(name="", description = "Y", default=0)
     morphRotationZ: IntProperty(name="", description = "Z", default=0)
     ignoreErrors: BoolProperty(name="Ignore errors", default=False)
-    ignoreKeyframeTrackers: IntProperty(name="Ignore trackers with keyframe amount", description = "Ignore trackers if the amount of keyframes is less or equal than the given amount.", default=1)
+    ignoreKeyframeTrackers: IntProperty(name="Ignore trackers with keyframe amount", description = "Ignore trackers if the amount of keyframes is less or equal than the given amount.", default=0)
     #yAxis: EnumProperty(name="Axis", items=[('-Y', '-Y', 'Equals mineways world orientation.'), ('Y', 'Y', 'No conversion.')], default='-Y',)
 
     defaultErrorEnd = "Read the console for further information."
