@@ -200,16 +200,15 @@ class Parser():
     def eulerFilter(self):
         if self.useEulerFilter is True:
             window = bpy.context.window
-            screen = window.screen
 
             #avoid TOPBAR - for some reason it caused problems
-            for area in screen.areas:
+            for area in bpy.context.screen.areas:
                 if area.type != 'TOPBAR':
                     oldtype = area.type
                     area.type = 'GRAPH_EDITOR'
-                    override = {'window': window, 'screen': screen, 'area': area}
 
-                    bpy.ops.graph.euler_filter(override)
+                    with bpy.context.temp_override(area=area, window=window):
+                        bpy.ops.graph.euler_filter()
                     area.type = oldtype
 
                     break
