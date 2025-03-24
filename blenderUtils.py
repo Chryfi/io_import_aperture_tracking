@@ -17,6 +17,11 @@ def addCamera(name):
 
     return obj
 
+def get_max_keyframe_time(action):
+    if action and action.fcurves:
+        return max(kp.co.x for fcurve in action.fcurves for kp in fcurve.keyframe_points)
+    return 0
+
 def insertKeyframe(obj, dataPath: str, framePos: int):
     obj.keyframe_insert(data_path=dataPath, frame=framePos)
 

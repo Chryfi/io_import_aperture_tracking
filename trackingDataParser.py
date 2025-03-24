@@ -90,6 +90,10 @@ class Parser():
 
         if len(self.data[self.cameraIndex]) > 1:
             self.eulerFilter()
+        
+        max_time = get_max_keyframe_time(self.camera.animation_data.action)
+        if max_time != 0:
+            bpy.context.scene.frame_end = int(max_time)
 
     def parseEntities(self):
         if self.entityIndex not in self.data:

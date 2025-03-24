@@ -80,6 +80,12 @@ class ImportJSON(bpy.types.Operator, ImportHelper):
             
             if camera is None:
                 camera = addCamera("Camera")
+                
+            # reset camera animation for clean start
+            if camera.animation_data is not None:
+                camera.animation_data.action = None
+            if camera.data.animation_data is not None:
+                camera.data.animation_data.action = None
 
             parser = Parser(data, camera, self)
             
