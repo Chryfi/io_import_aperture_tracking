@@ -37,11 +37,8 @@ class Parser():
         bpy.context.scene.render.resolution_y = renderInfo["resolution"][1]
 
         #motionblurfps != fps: #motionblur equivalent settings to ffmpeg's motionblur
-        bpy.context.scene.cycles.motion_blur_position = 'START'
+        bpy.context.scene.render.motion_blur_position = 'START'
         bpy.context.scene.render.motion_blur_shutter = 1
-                        
-        bpy.context.scene.eevee.motion_blur_position = 'START'
-        bpy.context.scene.eevee.motion_blur_shutter = 1
 
         self.ignoreFrame = motionblurfps / fps
         self.dynamicFOV = renderInfo["dynamic_fov"]
